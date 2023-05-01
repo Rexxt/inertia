@@ -1,4 +1,4 @@
-import os, json, tkinter as tk, requests
+import os, subprocess, tkinter as tk, requests
 from tkinter import ttk
 from tkinter import messagebox
 
@@ -36,5 +36,12 @@ class DownloaderWindow(tk.Tk):
             self.progress.step(1)
 
         messagebox.showinfo(name + " in " + pack_name, 'Installers downloaded.')
+        
+        self.progress_var.set(0)
+        for program in programs:
+            subprocess.call(['installers/' + pack_name + '/' + name + '/' + program['name'] + '.exe'])
+            self.progress.step(1)
+
+        messagebox.showinfo(name + " in " + pack_name, 'Installation complete.')
 
         self.destroy()
