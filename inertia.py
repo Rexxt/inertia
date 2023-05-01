@@ -1,4 +1,4 @@
-import os, json, tkinter as tk
+import platform, json, tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
@@ -6,6 +6,13 @@ import downloader
 
 INERTIA_VERSION = [0, 1, 0, "alpha"]
 INERTIA_VERSION_STR = [str(e) for e in INERTIA_VERSION]
+
+download_platforms = (platform.platform(), platform.platform(aliased=True),
+                      '.'.join(platform.platform().split('.')[:1]),
+                      '.'.join(platform.platform(aliased=True).split('.')[:1]),
+                      platform.platform(terse=True), platform.platform(terse=True, aliased=True),
+                      platform.system())
+#print(download_platforms)
 
 class App(tk.Tk):
     def __init__(self):
