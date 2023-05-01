@@ -9,7 +9,7 @@ class DownloaderWindow(tk.Tk):
         self.title("Pack Downloader")
         self.geometry('400x300')
         self.style = ttk.Style(self)
-        self.style.theme_use('vista')
+        self.style.theme_use('clam')
 
         self.list = tk.Listbox(self)
         self.list.pack(side='top', expand=True, fill='both')

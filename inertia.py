@@ -14,7 +14,7 @@ class App(tk.Tk):
         self.title("Inertia version " + ".".join(INERTIA_VERSION_STR))
         self.geometry('400x300')
         self.style = ttk.Style(self)
-        self.style.theme_use('vista')
+        self.style.theme_use('clam')
 
         self.inertia_pack = {}
         self.categories = {}
