@@ -47,15 +47,20 @@ class App(tk.Tk):
         for category in self.inertia_pack['programs']:
             self.categories[category] = {}
             self.categories[category]['tab'] = ttk.Frame(self.tab_control)
+            self.categories[category]['tab'].style = ttk.Style(self.categories[category]['tab'])
+            self.categories[category]['tab'].style.theme_use('clam')
             self.tab_control.add(self.categories[category]['tab'], text=category)
+
+            self.categories[category]['listbox'] = tk.Listbox(self.categories[category]['tab'])
+            self.categories[category]['listbox'].pack(side='left', expand=True, fill='both')
 
             self.categories[category]['btns'] = {}
             self.categories[category]['btns']['installCat'] = tk.Button(self.categories[category]['tab'], text='Install checked', command=self.start_downloader)
-            self.categories[category]['btns']['installCat'].grid(row=0, column=1, sticky="NE")
+            self.categories[category]['btns']['installCat'].pack(side='top', anchor='n', fill='both')
             self.categories[category]['btns']['uncheckAll'] = tk.Button(self.categories[category]['tab'], text='Uncheck all', command=self.cat_uncheck_all)
-            self.categories[category]['btns']['uncheckAll'].grid(row=2, column=1, sticky="NE")
+            self.categories[category]['btns']['uncheckAll'].pack(side='top', anchor='n', fill='both')
             self.categories[category]['btns']['checkAll'] = tk.Button(self.categories[category]['tab'], text='Check all', command=self.cat_check_all)
-            self.categories[category]['btns']['checkAll'].grid(row=3, column=1, sticky="NE")
+            self.categories[category]['btns']['checkAll'].pack(side='top', anchor='n', fill='both')
             
             self.categories[category]['boxes'] = {}
             self.categories[category]['vars'] = {}
@@ -66,7 +71,7 @@ class App(tk.Tk):
                 else:
                     self.categories[category]['vars'][program] = tk.IntVar(value=0)
                 self.categories[category]['boxes'][program] = tk.Checkbutton(
-                    self.categories[category]['tab'],
+                    self.categories[category]['listbox'],
                     text=program + ' (' + self.inertia_pack['programs'][category][program]['version'] + ')',
                     variable=self.categories[category]['vars'][program])
                 self.categories[category]['boxes'][program].grid(row=row_index, column=0, sticky="NW")
@@ -93,7 +98,6 @@ class App(tk.Tk):
             if self.categories[selected_category]['vars'][program].get() == 1:
                 programs_list.append({'name': program, 'installer': self.inertia_pack['programs'][selected_category][program]['installer']})
         window = downloader.DownloaderWindow()
-        window.grab_set()
         window.download_cat(self.inertia_pack['name'], selected_category, programs_list)
 
     def import_pack_file(self):

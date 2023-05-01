@@ -36,4 +36,5 @@ class DownloaderWindow(tk.Tk):
             self.progress.step(1)
 
         messagebox.showinfo(name + " in " + pack_name, 'Installers downloaded.')
+
         self.destroy()
