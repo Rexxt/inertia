@@ -1,4 +1,4 @@
-import platform, json, tkinter as tk
+import platform, json, sv_ttk, tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
@@ -21,8 +21,8 @@ class App(tk.Tk):
         # root window
         self.title("Inertia version " + ".".join(INERTIA_VERSION_STR))
         self.geometry('400x300')
-        self.style = ttk.Style(self)
-        self.style.theme_use('clam')
+
+        sv_ttk.set_theme("dark")
 
         self.inertia_pack = {}
         self.categories = {}
@@ -48,19 +48,17 @@ class App(tk.Tk):
         for category in self.inertia_pack['programs']:
             self.categories[category] = {}
             self.categories[category]['tab'] = ttk.Frame(self.tab_control)
-            self.categories[category]['tab'].style = ttk.Style(self.categories[category]['tab'])
-            self.categories[category]['tab'].style.theme_use('clam')
             self.tab_control.add(self.categories[category]['tab'], text=category)
 
             self.categories[category]['listbox'] = tk.Listbox(self.categories[category]['tab'])
             self.categories[category]['listbox'].pack(side='left', expand=True, fill='both')
 
             self.categories[category]['btns'] = {}
-            self.categories[category]['btns']['installCat'] = tk.Button(self.categories[category]['tab'], text='Install checked', command=self.start_downloader)
+            self.categories[category]['btns']['installCat'] = ttk.Button(self.categories[category]['tab'], text='Install checked', command=self.start_downloader, style="Accent.TButton")
             self.categories[category]['btns']['installCat'].pack(side='top', anchor='n', fill='both')
-            self.categories[category]['btns']['uncheckAll'] = tk.Button(self.categories[category]['tab'], text='Uncheck all', command=self.cat_uncheck_all)
+            self.categories[category]['btns']['uncheckAll'] = ttk.Button(self.categories[category]['tab'], text='Uncheck all', command=self.cat_uncheck_all)
             self.categories[category]['btns']['uncheckAll'].pack(side='top', anchor='n', fill='both')
-            self.categories[category]['btns']['checkAll'] = tk.Button(self.categories[category]['tab'], text='Check all', command=self.cat_check_all)
+            self.categories[category]['btns']['checkAll'] = ttk.Button(self.categories[category]['tab'], text='Check all', command=self.cat_check_all)
             self.categories[category]['btns']['checkAll'].pack(side='top', anchor='n', fill='both')
             
             self.categories[category]['boxes'] = {}
@@ -71,7 +69,7 @@ class App(tk.Tk):
                     self.categories[category]['vars'][program] = tk.IntVar(value=1)
                 else:
                     self.categories[category]['vars'][program] = tk.IntVar(value=0)
-                self.categories[category]['boxes'][program] = tk.Checkbutton(
+                self.categories[category]['boxes'][program] = ttk.Checkbutton(
                     self.categories[category]['listbox'],
                     text=program + ' (' + self.inertia_pack['programs'][category][program]['version'] + ')',
                     variable=self.categories[category]['vars'][program])
